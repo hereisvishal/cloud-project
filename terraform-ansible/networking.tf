@@ -1,3 +1,5 @@
+##Creating vpc, subnets, security group, internet gateway, routing table(along with its association to subnet) on AWS## 
+
 provider "aws" {
   region = "eu-north-1"
 }
