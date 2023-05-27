@@ -1,0 +1,49 @@
+---
+- name: Install and configure apache on EC2 instance
+  hosts: mydnswebserver.cloud
+  become: yes
+  tasks:
+
+  - name: Install apache package
+    yum:
+      name: httpd
+      state: latest
+      
+  - name: Enable the service
+    shell: systemctl enable --now httpd
+
+
+  - name: Make directory to place index.html file
+    file:
+      path: /var/www/html/www.mydnswebserver.cloud
+      state: directory
+      mode: "0777"
+  - name: Make vhost conf file and put in the server details
+    copy:
+      dest: /etc/httpd/conf.d/vhost.conf
+      content: |
+        <VirtualHost *:80>
+        ServerName mydnswebserver.cloud
+        ServerAlias www.mydnswebserver.cloud
+        ServerAdmin admin@www.mydnswebserver.cloud
+        DocumentRoot /var/www/html/www.mydnswebserver.cloud
+        DirectoryIndex index.html
+        ErrorLog /var/log/httpd/mydnswebserver.cloud-error.log
+        CustomLog /var/log/httpd/mydnswebserver.cloud-access.log combined
+        </VirtualHost>
+  - name: Make and content inside index.html file
+    copy:
+      dest: /var/www/html/www.mydnswebserver.cloud/index.html
+      content: |
+        <!doctype html>
+        <html>
+        <head>
+        <title>This is the title of the webpage!</title>
+        </head>
+        <body>
+        <p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this <strong>p</strong> tag and its contents.</p>
+        </body>
+        </html>
+  - name: Restart apache service to display the content of index.html file
+    shell: systemctl restart httpd
+
