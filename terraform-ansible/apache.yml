@@ -46,4 +46,3 @@
         </html>
   - name: Restart apache service to display the content of index.html file
     shell: systemctl restart httpd
-
