@@ -1,3 +1,7 @@
+##File to create key pair(recommeneded) and ec2 instance on AWS##
+
+
+
 resource "tls_private_key" "key-pair" {
   algorithm = "RSA"
   rsa_bits  = 4096
