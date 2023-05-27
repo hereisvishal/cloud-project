@@ -1,3 +1,5 @@
+##Fetching outputs to be used as values in the networking and instance tf files##
+
 output "vpc_id" {
   description = "ID of project VPC"
   value       = aws_vpc.myvpc1.id
