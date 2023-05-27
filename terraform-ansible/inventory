@@ -1,2 +1,3 @@
+##To define authentication method for ansible##
 [mydnswebserver.cloud]
 13.49.243.121 ansible_ssh_private_key_file=./key-pair.pem
